@@ -1,5 +1,5 @@
 
-.PHONY: build build-alpine clean test help default
+.PHONY: build build-alpine clean test help default gen
 
 
 
@@ -53,7 +53,7 @@ tag:
 
 
 gen:
-	sudo docker run --rm -v $(PWD):/defs namely/protoc-all -d proto -l go     -o pkg/gen/api
+	sudo docker run --rm -v $(PWD):/proto namely/protoc-all -d proto -l go     -o pkg/gen/api
 
 push: tag
 	@echo "Pushing docker image to registry: latest ${VERSION} $(GIT_COMMIT)"
