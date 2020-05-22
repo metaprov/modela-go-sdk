@@ -6,7 +6,6 @@ import (
 	"github.com/metaprov/mdgoclient/gen/api"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
-	"os"
 	"time"
 )
 
@@ -19,11 +18,7 @@ type PredictorClient struct {
 }
 
 func NewPredictorClient(host string, port int32) (*PredictorClient, error) {
-	p := os.Getenv("PREDICTION_SERVER_API_GRPC_PORT")
-	if p == "" {
-		p = "9252"
-	}
-	addr := fmt.Sprintf("localhost:%s", p)
+	addr := fmt.Sprintf("%s:%d", host, port)
 	s := &PredictorClient{
 		ctx:  context.Background(),
 		host: host,
