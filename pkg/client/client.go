@@ -14,16 +14,20 @@ import (
 type PredictorClient struct {
 	client api.PredictionServerClient
 	ctx    context.Context
+	host   string
+	port   int32
 }
 
-func NewPredictorClient() (*PredictorClient, error) {
+func NewPredictorClient(host string, port int32) (*PredictorClient, error) {
 	p := os.Getenv("PREDICTION_SERVER_API_GRPC_PORT")
 	if p == "" {
 		p = "9252"
 	}
 	addr := fmt.Sprintf("localhost:%s", p)
 	s := &PredictorClient{
-		ctx: context.Background(),
+		ctx:  context.Background(),
+		host: host,
+		port: port,
 	}
 	// block for at least 30 seconds
 	ctx, cancel := context.WithTimeout(s.ctx, 30*time.Second)
