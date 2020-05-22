@@ -74,33 +74,39 @@ func (r *PredictorClient) GetSchema() (string, error) {
 }
 
 func (r *PredictorClient) GetDataset() (string, error) {
-	schema, err := r.client.GetDataset(r.ctx, &api.GetDatasetRequest{})
+	dataset, err := r.client.GetDataset(r.ctx, &api.GetDatasetRequest{})
 	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Schema message")
+		return "", errors.Wrap(err, "failed not send Get Dataset message")
 	}
-	return schema.Content, nil
+	return dataset.Content, nil
 }
 
 func (r *PredictorClient) GetModel() (string, error) {
-	schema, err := r.client.GetModel(r.ctx, &api.GetModelRequest{})
+	model, err := r.client.GetModel(r.ctx, &api.GetModelRequest{})
 	if err != nil {
 		return "", errors.Wrap(err, "failed not send Get Model message")
 	}
-	return schema.Content, nil
+	return model.Content, nil
 }
 
 func (r *PredictorClient) GetStats() (string, error) {
-	schema, err := r.client.GetStat(r.ctx, &api.GetStatRequest{})
+	stat, err := r.client.GetStat(r.ctx, &api.GetStatRequest{})
 	if err != nil {
 		return "", errors.Wrap(err, "failed not send Get Model message")
 	}
-	return schema.Content, nil
+	return stat.Content, nil
 }
 
-func (r *PredictorClient) Snapshot() (string, error) {
-	schema, err := r.client.GetStat(r.ctx, &api.GetStatRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Model message")
+func (r *PredictorClient) Predict(colsJson string, dataJson string, full bool) (string, error) {
+	req := &api.PredictionRequest{
+		Columns:  colsJson,
+		Features: dataJson,
+		Full:     false,
 	}
-	return schema.Content, nil
+
+	result, err := r.client.Predict(r.ctx, req)
+	if err != nil {
+		return "", errors.Wrap(err, "failed prediction")
+	}
+	return result.Labels, nil
 }
