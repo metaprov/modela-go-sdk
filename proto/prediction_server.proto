@@ -2,100 +2,39 @@ syntax = "proto3";
 
 package pkg.client;
 
-import "protoc-gen-swagger/options/annotations.proto";
-import "google/api/annotations.proto";
 option go_package = "github.com/metaprov/mdgoclient/gen/api";
 
-
-
-option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
-  info: {
-    title: "PredictionServer"
-    version: "1.0"
-    contact: {
-      name: "modeld authors"
-      url: "https://modeld.io"
-      email: "modeld-discuss@googlegroups.com"
-    }
-  }
-  external_docs: {
-    url: "https://modeld.io/site/docs/"
-    description: "Modeld Documentation"
-  }
-  schemes: HTTP
-  schemes: HTTPS
-  consumes: "application/json"
-  produces: "application/json"
-  responses: {
-    key: "404"
-    value: {
-      description: "Returned when the resource does not exist."
-      schema: { json_schema: { type: STRING } }
-    }
-  }
-};
 
 // On any input that is documented to expect a string parameter in
 // snake_case or kebab-case, either of those cases is accepted.
 service PredictionServer {
 
   rpc Predict(PredictionRequest) returns (PredictionResponse) {
-    option (google.api.http) = {
-      post: "/predict"
-      body: "*"
-    };
   }
 
   rpc BatchPredict(BatchPredictRequest) returns (BatchPredictResponse) {
-    option (google.api.http) = {
-      post: "/batchpredict"
-      body: "*"
-    };
   }
 
   rpc Alive(AliveRequest) returns (AliveResponse) {
-      option (google.api.http) = {
-      get: "/alive"
-
-    };
   }
 
   rpc Ready(ReadyRequest) returns (ReadyResponse) {
-      option (google.api.http) = {
-      get: "/ready"
-
-    };
   }
 
 
   rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
-      option (google.api.http) = {
-      get: "/product"
-    };
   }
 
   rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {
-      option (google.api.http) = {
-      get: "/schema"
-    };
   }
 
   rpc GetDataset(GetDatasetRequest) returns (GetDatasetResponse) {
-      option (google.api.http) = {
-      get: "/dataset"
-    };
   }
 
   rpc GetModel(GetModelRequest) returns (GetModelResponse) {
-      option (google.api.http) = {
-      get: "/model"
-    };
   }
 
   rpc GetStat(GetStatRequest) returns (GetStatResponse) {
-      option (google.api.http) = {
-      get: "/stat"
-    };
   }
 
 

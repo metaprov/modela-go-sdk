@@ -17,7 +17,7 @@ PROTO_FILES=proto/*
 
 # generate the api objects
 GOOGLE_PROTO_API_PATH=${PROJECT_ROOT}/common-protos
-GOGO_PROTOBUF_PATH=${PROJECT_ROOT}/common-protos/github.com/gogo/protobuf
+
 
 
 protoc \
