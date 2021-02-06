@@ -2,8 +2,9 @@ package client
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
-	api "github.com/metaprov/mdgoclient/protos/prediction-server/v1"
+	api "github.com/metaprov/modeld-go-sdk/protos/prediction-server/v1"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"time"
@@ -35,62 +36,38 @@ func NewPredictorClient(host string, port int32) (*PredictorClient, error) {
 	return s, errors.Wrap(err, "could not set up health check")
 }
 
-func (r *PredictorClient) Ready() error {
-	_, err := r.client.Ready(r.ctx, &api.ReadyRequest{})
+
+func (r *PredictorClient) Ready() (bool,error) {
+	req := &api.ServerReadyRequest{}
+	res, err := r.client.ServerReady(r.ctx, req)
 	if err != nil {
-		return errors.Wrap(err, "failed not send Ready message")
+		return false,errors.Wrap(err, "failed not send Ready message")
 	}
-	return nil
+	return res.Ready,nil
 
 }
 
-func (r *PredictorClient) Alive() error {
-	_, err := r.client.Ready(r.ctx, &api.ReadyRequest{})
+func (r *PredictorClient) Alive() (bool,error) {
+	req := &api.ServerLiveRequest{}
+	res, err := r.client.ServerLive(r.ctx, req)
 	if err != nil {
-		return errors.Wrap(err, "failed not send Ready message")
+		return false,errors.Wrap(err, "failed not send Ready message")
 	}
-	return nil
+	return res.Live,nil
 }
 
-func (r *PredictorClient) GetProduct() (string, error) {
-	product, err := r.client.GetProduct(r.ctx, &api.GetProductRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Ready message")
+func (r *PredictorClient) ModelReady(name string,version string) (bool,error) {
+	req := &api.ModelReadyRequest{
+		Name:    name,
+		Version: version,
 	}
-	return product.Content, nil
+	res, err := r.client.ModelReady(r.ctx, req)
+	if err != nil {
+		return false,errors.Wrap(err, "failed not send ready message")
+	}
+	return res.Ready,nil
 }
 
-func (r *PredictorClient) GetSchema() (string, error) {
-	schema, err := r.client.GetSchema(r.ctx, &api.GetSchemaRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Schema message")
-	}
-	return schema.Content, nil
-}
-
-func (r *PredictorClient) GetDataset() (string, error) {
-	dataset, err := r.client.GetDataset(r.ctx, &api.GetDatasetRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Dataset message")
-	}
-	return dataset.Content, nil
-}
-
-func (r *PredictorClient) GetModel() (string, error) {
-	model, err := r.client.GetModel(r.ctx, &api.GetModelRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Model message")
-	}
-	return model.Content, nil
-}
-
-func (r *PredictorClient) GetStats() (string, error) {
-	stat, err := r.client.GetStat(r.ctx, &api.GetStatRequest{})
-	if err != nil {
-		return "", errors.Wrap(err, "failed not send Get Model message")
-	}
-	return stat.Content, nil
-}
 
 func (r *PredictorClient) Predict(colsJson string, dataJson string, full bool) (string, error) {
 	req := &api.PredictRequest{
@@ -105,5 +82,6 @@ func (r *PredictorClient) Predict(colsJson string, dataJson string, full bool) (
 	if err != nil {
 		return "", errors.Wrap(err, "failed prediction")
 	}
-	return result.Items, nil
+	res,err := json.Marshal(result.Items)
+	return string(res),err
 }
