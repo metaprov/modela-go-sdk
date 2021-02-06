@@ -1,12 +1,11 @@
 .PHONY: build build-alpine clean test help default gen
 
 PROTO_ROOT       =https://raw.githubusercontent.com/metaprov/modeld-api/master/modeld-api
-
 VERSION := $(shell grep "const Version " version/version.go | sed -E 's/.*"(.+)"$$/\1/')
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
-
+RELEASE_VERSION= 0.1.12
 
 .PHONY: all
 all: help
@@ -31,8 +30,7 @@ spell: ## Checks spelling across the entire project
 .PHONY: cover
 cover: tidy ## Displays test coverage in the client and service packages
 	go test -coverprofile=cover-client.out ./client && go tool cover -html=cover-client.out
-	go test -coverprofile=cover-grpc.out ./service/grpc && go tool cover -html=cover-grpc.out
-	go test -coverprofile=cover-http.out ./service/http && go tool cover -html=cover-http.out
+	go test -coverprofile=cover-grpc.out ./protos/prediction-server/v1  && go tool cover -html=cover-grpc.out
 
 .PHONY: lint
 lint: ## Lints the entire project

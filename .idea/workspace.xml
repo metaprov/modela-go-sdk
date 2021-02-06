@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="13bce61e-2e99-4b77-8746-ce6297f38372" name="Default Changelist" comment="Call the new grpc methods." />
+    <list default="true" id="13bce61e-2e99-4b77-8746-ce6297f38372" name="Default Changelist" comment="added the rest of the code.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,7 +74,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial" />
     <MESSAGE value="Call the new grpc methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="Call the new grpc methods." />
+    <MESSAGE value="added the rest of the code." />
+    <option name="LAST_COMMIT_MESSAGE" value="added the rest of the code." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
