@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
-	"github.com/metaprov/mdgoclient/gen/api"
+	api "github.com/metaprov/mdgoclient/protos/prediction-server/v1"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"time"
@@ -93,15 +93,17 @@ func (r *PredictorClient) GetStats() (string, error) {
 }
 
 func (r *PredictorClient) Predict(colsJson string, dataJson string, full bool) (string, error) {
-	req := &api.PredictionRequest{
-		Columns:  colsJson,
-		Features: dataJson,
-		Full:     false,
+	req := &api.PredictRequest{
+		Name:     "",
+		Validate: false,
+		Explain:  false,
+		Format:   0,
+		Payload:  "",
 	}
 
 	result, err := r.client.Predict(r.ctx, req)
 	if err != nil {
 		return "", errors.Wrap(err, "failed prediction")
 	}
-	return result.Labels, nil
+	return result.Items, nil
 }
