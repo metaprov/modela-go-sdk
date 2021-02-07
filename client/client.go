@@ -18,6 +18,10 @@ type PredictorClient struct {
 	port   int32
 }
 
+
+
+
+
 func NewPredictorClient(host string, port int32) (*PredictorClient, error) {
 	addr := fmt.Sprintf("%s:%d", host, port)
 	s := &PredictorClient{
