@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="13bce61e-2e99-4b77-8746-ce6297f38372" name="Default Changelist" comment="force grpc and protobuf to pre proto 1.4">
+    <list default="true" id="db573a24-17ed-41c1-acfd-e6f80622e702" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modeld-go-sdk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modeld-go-sdk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +23,7 @@
     <option name="context" value="docker-desktop" />
     <option name="namespace" value="default" />
   </component>
-  <component name="ProjectId" id="1o77NEqaH67Ka8Xk66ioDV7aBpm" />
+  <component name="ProjectId" id="1o8XPANanFEUmfpJyt8hrdRcuzO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,25 +36,6 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\tmesh\git\github.com\metaprov\modeld-go-sdk" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="gen" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/Makefile" target="gen" workingDirectory="" arguments="">
-        <envs />
-      </makefile>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Makefile.gen" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -69,13 +51,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial" />
-    <MESSAGE value="Call the new grpc methods." />
-    <MESSAGE value="added the rest of the code." />
-    <MESSAGE value="force grpc and protobuf to pre proto 1.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="force grpc and protobuf to pre proto 1.4" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
