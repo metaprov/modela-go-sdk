@@ -2,19 +2,18 @@ package client
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"time"
 
 	"github.com/gogo/protobuf/jsonpb"
-	api "github.com/metaprov/modeldapi/services/predictiond/v1"
+	api "github.com/metaprov/modeldapi/services/grpcinferenceservice/v1"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 )
 
 // SDK is an instance of the Agones SDK
 type PredictorClient struct {
-	client api.PredictionServerClient
+	client api.GRPCInferenceServiceClient
 	ctx    context.Context
 	host   string
 	port   int32
@@ -34,7 +33,7 @@ func NewPredictorClient(host string, port int32) (*PredictorClient, error) {
 	if err != nil {
 		return s, errors.Wrapf(err, "could not connect to %s", addr)
 	}
-	s.client = api.NewPredictionServerClient(conn)
+	s.client = api.NewGRPCInferenceServiceClient(conn)
 	return s, errors.Wrap(err, "could not set up health check")
 }
 
@@ -69,26 +68,9 @@ func (r *PredictorClient) ModelReady(name string, version string) (bool, error) 
 	return res.Ready, nil
 }
 
-func (r *PredictorClient) Predict(colsJson string, dataJson string, full bool) (string, error) {
-	req := &api.PredictRequest{
-		Name:     "",
-		Validate: false,
-		Explain:  false,
-		Format:   0,
-		Payload:  "",
-	}
-
-	result, err := r.client.Predict(r.ctx, req)
-	if err != nil {
-		return "", errors.Wrap(err, "failed prediction")
-	}
-	res, err := json.Marshal(result.Items)
-	return string(res), err
-}
-
 // SDK is an instance of the Agones SDK
 type PredictionRequest struct {
-	client   api.PredictionServerClient
+	client   api.GRPCInferenceServiceClient
 	ctx      context.Context
 	explain  bool // return an explenation for each prediction
 	validate bool // using the predictor schema, validate the prediction
@@ -145,12 +127,13 @@ func (req *PredictionRequest) SendInsecure(host string, port int) (*PredictionRe
 	if err != nil {
 		return nil, errors.Wrapf(err, "could not connect to %s", addr)
 	}
-	client := api.NewPredictionServerClient(conn)
+	defer conn.Close()
+	client := api.NewGRPCInferenceServiceClient(conn)
 	grpcReq := &api.PredictRequest{
 		Name:     "",
 		Validate: req.validate,
 		Explain:  req.explain,
-		Format:   api.PredictFormat_PREDICT_FORMAT_JSON,
+		Format:   "json",
 		Payload:  req.payload,
 	}
 
@@ -163,11 +146,47 @@ func (req *PredictionRequest) SendInsecure(host string, port int) (*PredictionRe
 
 }
 
-func (r *PredictionRequest) GetPredictor(ctx context.Context, in *api.GetPredictorRequest) (*api.GetPredictorResponse, error) {
-	return &api.GetPredictorResponse{}, nil
+func (req *PredictionRequest) GetPredictor(host string, port int) (*api.GetPredictorResponse, error) {
+	addr := fmt.Sprintf("%s:%d", host, port)
+	ctx, cancel := context.WithTimeout(req.ctx, 30*time.Second)
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, addr, grpc.WithBlock(), grpc.WithInsecure())
+	if err != nil {
+		return nil, errors.Wrapf(err, "could not connect to %s", addr)
+	}
+	defer conn.Close()
+	client := api.NewGRPCInferenceServiceClient(conn)
+	grpcReq := &api.GetPredictorRequest{
+		Name: "",
+	}
+
+	result, err := client.GetPredictor(req.ctx, grpcReq)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed call prediction")
+	}
+
+	return result, nil
 
 }
 
-func (r *PredictionRequest) GetModel(ctx context.Context, in *api.GetModelRequest) (*api.GetModelRequest, error) {
-	return &api.GetModelRequest{}, nil
+func (r *PredictionRequest) GetModel(predictorName string, name string, host string, port int, ctx context.Context) (*api.GetModelResponse, error) {
+	addr := fmt.Sprintf("%s:%d", host, port)
+	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, addr, grpc.WithBlock(), grpc.WithInsecure())
+	if err != nil {
+		return nil, errors.Wrapf(err, "could not connect to %s", addr)
+	}
+	defer conn.Close()
+	client := api.NewGRPCInferenceServiceClient(conn)
+	grpcReq := &api.GetModelRequest{
+		PredictorName: predictorName,
+		Name:          name,
+	}
+
+	result, err := client.GetModel(ctx, grpcReq)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed GetModel")
+	}
+	return result, nil
 }
