@@ -75,11 +75,17 @@ type PredictionRequest struct {
 	explain  bool // return an explenation for each prediction
 	validate bool // using the predictor schema, validate the prediction
 	model    string
+	format   string
 	payload  string
+	labeled  bool
+	metrics  []string
 }
 
 func NewPrediction() *PredictionRequest {
-	return &PredictionRequest{ctx: context.Background()}
+	return &PredictionRequest{
+		ctx:     context.Background(),
+		metrics: make([]string, 0),
+	}
 }
 
 type PredictionResult struct {
@@ -113,6 +119,23 @@ func (req *PredictionRequest) Validate() *PredictionRequest {
 
 func (req *PredictionRequest) WithJson(payload string) *PredictionRequest {
 	req.payload = payload
+	req.format = "json"
+	return req
+}
+
+func (req *PredictionRequest) WithCsv(payload string) *PredictionRequest {
+	req.payload = payload
+	req.format = "csv"
+	return req
+}
+
+func (req *PredictionRequest) WithLabeled() *PredictionRequest {
+	req.labeled = true
+	return req
+}
+
+func (req *PredictionRequest) WithMetrics(metrics []string) *PredictionRequest {
+	req.metrics = metrics
 	return req
 }
 
@@ -133,8 +156,10 @@ func (req *PredictionRequest) SendInsecure(host string, port int) (*PredictionRe
 		Name:     "",
 		Validate: req.validate,
 		Explain:  req.explain,
-		Format:   "json",
+		Format:   req.format,
 		Payload:  req.payload,
+		Labeled:  req.labeled,
+		Metrics:  req.metrics,
 	}
 
 	result, err := client.Predict(req.ctx, grpcReq)
