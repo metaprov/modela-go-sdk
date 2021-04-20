@@ -100,7 +100,11 @@ func (res *PredictionResult) AsJson() (string, error) {
 		return "", errors.Wrap(err, "failed to marshal result")
 	}
 	return resultPayload, nil
+}
 
+//TestResults answers the result of executing the test
+func (res *PredictionResult) TestResults() (map[string]float32, error) {
+	return res.raw.Scores, nil
 }
 
 type PredictionResultLineItem struct {
