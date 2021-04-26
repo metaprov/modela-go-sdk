@@ -1,3 +1,5 @@
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
 # github.com/gogo/protobuf v1.3.2
 github.com/gogo/protobuf/jsonpb
 github.com/gogo/protobuf/proto
@@ -13,10 +15,14 @@ github.com/golang/protobuf/ptypes/struct
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/grpc-ecosystem/grpc-gateway v1.9.5
 github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options
-# github.com/metaprov/modeldapi v0.3.209
+# github.com/metaprov/modeldapi v0.3.241
 github.com/metaprov/modeldapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.7.0
+github.com/stretchr/testify/assert
 # golang.org/x/net v0.0.0-20210119194325-5f4716e94777
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
@@ -114,3 +120,5 @@ google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/structpb
 google.golang.org/protobuf/types/known/timestamppb
+# gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
+gopkg.in/yaml.v3
