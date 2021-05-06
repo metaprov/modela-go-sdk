@@ -15,7 +15,7 @@ github.com/golang/protobuf/ptypes/struct
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/grpc-ecosystem/grpc-gateway v1.9.5
 github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options
-# github.com/metaprov/modeldapi v0.3.269
+# github.com/metaprov/modeldapi v0.3.270
 github.com/metaprov/modeldapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
