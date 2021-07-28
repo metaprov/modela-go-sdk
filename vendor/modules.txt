@@ -15,7 +15,7 @@ github.com/golang/protobuf/ptypes/struct
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/grpc-ecosystem/grpc-gateway v1.9.5
 github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options
-# github.com/metaprov/modeldapi v0.3.490
+# github.com/metaprov/modeldapi v0.3.557
 github.com/metaprov/modeldapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
@@ -38,10 +38,10 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20210211154401-3a9a48ddfd6c
+# google.golang.org/genproto v0.0.0-20210617175327-b9e0b3197ced
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/rpc/status
-# google.golang.org/grpc v1.36.1
+# google.golang.org/grpc v1.38.0
 google.golang.org/grpc
 google.golang.org/grpc/attributes
 google.golang.org/grpc/backoff
