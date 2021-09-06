@@ -1,6 +1,6 @@
-# modeldgoclient
+# modelagoclient
 
-go client for the modeld prediction server
+go client for the modela prediction server
 
 ## Getting started
 
@@ -10,7 +10,7 @@ Running it then should be as simple as:
 
 ```console
 $ make
-$ ./bin/modeldgoclient
+$ ./bin/modelagoclient
 ```
 
 ### Testing

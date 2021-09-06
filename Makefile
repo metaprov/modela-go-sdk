@@ -1,6 +1,6 @@
 .PHONY: build build-alpine clean test help default gen
 
-PROTO_ROOT       =https://raw.githubusercontent.com/metaprov/modeld-api/master/modeld-api
+PROTO_ROOT       =https://raw.githubusercontent.com/metaprov/modela-api/master/modela-api
 VERSION := $(shell grep "const Version " version/version.go | sed -E 's/.*"(.+)"$$/\1/')
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
@@ -48,16 +48,16 @@ clean: ## Cleans the generated files
 
 
 .PHONY: gen
-gen: ## Downloads proto files from modeld/modeld-api master and generates gRPC proto clients
+gen: ## Downloads proto files from modela/modela-api master and generates gRPC proto clients
 	go install github.com/gogo/protobuf/gogoreplace
 
 	rm -rf ./protos/*
 
 	mkdir -p ./protos/prediction-server/v1/
 
-	wget -q https://raw.githubusercontent.com/metaprov/modeld-api/main/prediction-server/v1/prediction_server.proto -O ./protos/prediction-server/v1/prediction_server.proto
-	gogoreplace 'option go_package = "github.com/metaprov/modeld/pkg/proto/predictionserver/v1;prediction-server";' \
-		'option go_package = "github.com/metaprov/modeld-go-sdk/modeld/proto/predictionserver/v1;prediction-server";' \
+	wget -q https://raw.githubusercontent.com/metaprov/modela-api/main/prediction-server/v1/prediction_server.proto -O ./protos/prediction-server/v1/prediction_server.proto
+	gogoreplace 'option go_package = "github.com/metaprov/modela/pkg/proto/predictionserver/v1;prediction-server";' \
+		'option go_package = "github.com/metaprov/modela-go-sdk/modela/proto/predictionserver/v1;prediction-server";' \
 		./protos/prediction-server/v1/prediction_server.proto
 
 	protoc -Icommon-protos \

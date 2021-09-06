@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gogo/protobuf/jsonpb"
-	api "github.com/metaprov/modeldapi/services/grpcinferenceservice/v1"
+	api "github.com/metaprov/modelaapi/services/grpcinferenceservice/v1"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 )
