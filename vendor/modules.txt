@@ -15,7 +15,7 @@ github.com/golang/protobuf/ptypes/struct
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/grpc-ecosystem/grpc-gateway v1.16.0
 github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options
-# github.com/metaprov/modelaapi v0.4.52
+# github.com/metaprov/modelaapi v0.4.308
 github.com/metaprov/modelaapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
@@ -86,7 +86,7 @@ google.golang.org/grpc/serviceconfig
 google.golang.org/grpc/stats
 google.golang.org/grpc/status
 google.golang.org/grpc/tap
-# google.golang.org/protobuf v1.26.0
+# google.golang.org/protobuf v1.27.1
 google.golang.org/protobuf/encoding/protojson
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
