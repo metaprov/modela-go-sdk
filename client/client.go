@@ -185,9 +185,7 @@ func (req *PredictionRequest) GetPredictor(host string, port int) (*api.GetPredi
 	}
 	defer conn.Close()
 	client := api.NewGRPCInferenceServiceClient(conn)
-	grpcReq := &api.GetPredictorRequest{
-		Name: "",
-	}
+	grpcReq := &api.GetPredictorRequest{}
 
 	result, err := client.GetPredictor(req.ctx, grpcReq)
 	if err != nil {
@@ -209,8 +207,7 @@ func (r *PredictionRequest) GetModel(predictorName string, name string, host str
 	defer conn.Close()
 	client := api.NewGRPCInferenceServiceClient(conn)
 	grpcReq := &api.GetModelRequest{
-		PredictorName: predictorName,
-		Name:          name,
+		Name: name,
 	}
 
 	result, err := client.GetModel(ctx, grpcReq)
