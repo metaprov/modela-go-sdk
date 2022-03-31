@@ -47,6 +47,16 @@ func (r *PredictorClient) Ready() (bool, error) {
 
 }
 
+func (r *PredictorClient) Shutdown() error {
+	req := &api.ServerShutdownRequest{}
+	_, err := r.client.Shutdown(r.ctx, req)
+	if err != nil {
+		return errors.Wrap(err, "failed shutdown server")
+	}
+	return nil
+
+}
+
 func (r *PredictorClient) Alive() (bool, error) {
 	req := &api.ServerLiveRequest{}
 	res, err := r.client.ServerLive(r.ctx, req)
