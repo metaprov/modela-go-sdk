@@ -167,13 +167,13 @@ func (req *PredictionRequest) SendInsecure(host string, port int) (*PredictionRe
 	defer conn.Close()
 	client := api.NewGRPCInferenceServiceClient(conn)
 	grpcReq := &api.PredictRequest{
-		Name:     "",
-		Validate: req.validate,
-		Explain:  req.explain,
-		Format:   req.format,
-		Payload:  req.payload,
-		Labeled:  req.labeled,
-		Metrics:  req.metrics,
+		Predictor: "",
+		Validate:  req.validate,
+		Explain:   req.explain,
+		Format:    req.format,
+		Payload:   req.payload,
+		Labeled:   req.labeled,
+		Metrics:   req.metrics,
 	}
 
 	result, err := client.Predict(req.ctx, grpcReq)

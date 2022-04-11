@@ -311,8 +311,8 @@ github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaO
 github.com/mattn/go-isatty v0.0.3/go.mod h1:M+lRXTBqGeGNdLjl/ufCoiOlB5xdOkqRJdNxMWT7Zi4=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
 github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369/go.mod h1:BSXmuO+STAnVfrANrmjBb36TMTDstsz7MSK+HVaYKv4=
-github.com/metaprov/modelaapi v0.4.649 h1:va5XzLbpjwpn3nI6Jx+xrlO6JTIQeBQmrhVE3N+0Tco=
-github.com/metaprov/modelaapi v0.4.649/go.mod h1:N77bYiMtPC+GWL/4P/VGr7ATgAZkIy/csmxAynNO2Fc=
+github.com/metaprov/modelaapi v0.4.686 h1:zd8tzS0p+4R0DaG2PRHCnE20r3MAjlSjxi29LhRcdzI=
+github.com/metaprov/modelaapi v0.4.686/go.mod h1:N77bYiMtPC+GWL/4P/VGr7ATgAZkIy/csmxAynNO2Fc=
 github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
 github.com/mitchellh/cli v1.0.0/go.mod h1:hNIlj7HEI86fIcpObd7a0FcrxTWetlwJDGcceTlRvqc=
 github.com/mitchellh/go-homedir v1.0.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
