@@ -19,7 +19,7 @@ github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options
 github.com/grpc-ecosystem/grpc-gateway/v2/internal/httprule
 github.com/grpc-ecosystem/grpc-gateway/v2/runtime
 github.com/grpc-ecosystem/grpc-gateway/v2/utilities
-# github.com/metaprov/modelaapi v0.4.704
+# github.com/metaprov/modelaapi v0.4.725
 github.com/metaprov/modelaapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
