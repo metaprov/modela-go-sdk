@@ -27,7 +27,7 @@ github.com/grpc-ecosystem/grpc-gateway/v2/runtime
 github.com/grpc-ecosystem/grpc-gateway/v2/utilities
 # github.com/kr/pretty v0.3.0
 ## explicit; go 1.12
-# github.com/metaprov/modelaapi v0.4.846
+# github.com/metaprov/modelaapi v0.4.848
 ## explicit; go 1.18
 github.com/metaprov/modelaapi/services/grpcinferenceservice/v1
 # github.com/pkg/errors v0.9.1
