@@ -1,4 +1,4 @@
-module modela-go-sdk
+module github.com/metaprov/modela-go-sdk
 
 go 1.18
 
