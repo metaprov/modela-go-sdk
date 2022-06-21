@@ -1,0 +1,1 @@
+{"buildTargets":["all","build","build-alpine","clean","cover","default","gen","help","install-tools","lint","spell","tag","test","tidy"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
