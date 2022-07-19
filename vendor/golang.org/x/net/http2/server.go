@@ -400,7 +400,7 @@ func (s *Server) ServeConn(c net.Conn, opts *ServeConnOpts) {
 	if s.NewWriteScheduler != nil {
 		sc.writeSched = s.NewWriteScheduler()
 	} else {
-		sc.writeSched = NewPriorityWriteScheduler(nil)
+		sc.writeSched = NewRandomWriteScheduler()
 	}
 
 	// These start at the RFC-specified defaults. If there is a higher
@@ -2316,18 +2316,17 @@ type requestBody struct {
 	_             incomparable
 	stream        *stream
 	conn          *serverConn
-	closeOnce     sync.Once // for use by Close only
-	sawEOF        bool      // for use by Read only
-	pipe          *pipe     // non-nil if we have a HTTP entity message body
-	needsContinue bool      // need to send a 100-continue
+	closed        bool  // for use by Close only
+	sawEOF        bool  // for use by Read only
+	pipe          *pipe // non-nil if we have a HTTP entity message body
+	needsContinue bool  // need to send a 100-continue
 }
 
 func (b *requestBody) Close() error {
-	b.closeOnce.Do(func() {
-		if b.pipe != nil {
-			b.pipe.BreakWithError(errClosedBody)
-		}
-	})
+	if b.pipe != nil && !b.closed {
+		b.pipe.BreakWithError(errClosedBody)
+	}
+	b.closed = true
 	return nil
 }
 
@@ -2547,9 +2546,8 @@ func (rws *responseWriterState) writeChunk(p []byte) (n int, err error) {
 // prior to the headers being written. If the set of trailers is fixed
 // or known before the header is written, the normal Go trailers mechanism
 // is preferred:
-//
-//	https://golang.org/pkg/net/http/#ResponseWriter
-//	https://golang.org/pkg/net/http/#example_ResponseWriter_trailers
+//    https://golang.org/pkg/net/http/#ResponseWriter
+//    https://golang.org/pkg/net/http/#example_ResponseWriter_trailers
 const TrailerPrefix = "Trailer:"
 
 // promoteUndeclaredTrailers permits http.Handlers to set trailers
@@ -2645,7 +2643,8 @@ func checkWriteHeaderCode(code int) {
 	// Issue 22880: require valid WriteHeader status codes.
 	// For now we only enforce that it's three digits.
 	// In the future we might block things over 599 (600 and above aren't defined
-	// at http://httpwg.org/specs/rfc7231.html#status.codes).
+	// at http://httpwg.org/specs/rfc7231.html#status.codes)
+	// and we might block under 200 (once we have more mature 1xx support).
 	// But for now any three digits.
 	//
 	// We used to send "HTTP/1.1 000 0" on the wire in responses but there's
@@ -2666,33 +2665,13 @@ func (w *responseWriter) WriteHeader(code int) {
 }
 
 func (rws *responseWriterState) writeHeader(code int) {
-	if rws.wroteHeader {
-		return
-	}
-
-	checkWriteHeaderCode(code)
-
-	// Handle informational headers
-	if code >= 100 && code <= 199 {
-		// Per RFC 8297 we must not clear the current header map
-		h := rws.handlerHeader
-
-		if rws.conn.writeHeaders(rws.stream, &writeResHeaders{
-			streamID:    rws.stream.id,
-			httpResCode: code,
-			h:           h,
-			endStream:   rws.handlerDone && !rws.hasTrailers(),
-		}) != nil {
-			rws.dirty = true
+	if !rws.wroteHeader {
+		checkWriteHeaderCode(code)
+		rws.wroteHeader = true
+		rws.status = code
+		if len(rws.handlerHeader) > 0 {
+			rws.snapHeader = cloneHeader(rws.handlerHeader)
 		}
-
-		return
-	}
-
-	rws.wroteHeader = true
-	rws.status = code
-	if len(rws.handlerHeader) > 0 {
-		rws.snapHeader = cloneHeader(rws.handlerHeader)
 	}
 }
 
